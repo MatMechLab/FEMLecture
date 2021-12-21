@@ -21,3 +21,12 @@ then everything is done, open your jupyter notebook and enjoy :-) :
 ```
 jupyter-lab
 ```
+
+# Lecture
+The video lecture in chinese can be found here [FEM-Lecture](https://space.bilibili.com/100272198/channel/detail?cid=201531)
+
+# Discussion
+The discussion can be done in the following QQ group:
+```
+628204857
+```
