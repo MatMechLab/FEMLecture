@@ -5,3 +5,5 @@ __maintainer__ = "Yang Bai"
 __email__ = "yangbai90@outlook.com"
 __status__ = "development"
 __date__ = "Dec 19, 2021"
+
+__all__=["gaussrule","shapefun"]
