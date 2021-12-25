@@ -84,7 +84,7 @@ class mesh1d:
         self.elementconn=np.zeros((self.elements,self.nodesperelement),dtype=np.int16)
         for e in range(self.elements):
             for j in range(self.nodesperelement):
-                self.elementconn[e,j]=e*self.order+j+1
+                self.elementconn[e,j]=e*self.order+j
     #####################################################
     def printnodes(self):
         print('*** node coordinates of the mesh (total nodes=%d, nodes per element=%d)'%(self.nodes,self.nodesperelement))
