@@ -166,6 +166,7 @@ class mesh2d:
             print(str)
     ######################################################
     def plotmesh(self,withnode=False,withnodeid=False):
+        plt.plot()
         for e in range(self.elements):
             conn=self.elementconn[e,:]
             if 'quad4' in self.meshtype:

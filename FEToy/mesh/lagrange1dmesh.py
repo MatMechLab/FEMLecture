@@ -25,8 +25,8 @@ class mesh1d:
         """
         self.meshtype=meshtype
         self.dim=1
-        self.xmin=0.0
-        self.xmax=1.0
+        self.xmin=xmin
+        self.xmax=xmax
         self.nx=nx
         self.order=1
         self.nodes=0
@@ -101,6 +101,7 @@ class mesh1d:
     ######################################################
     def plotmesh(self,withnode=False,withnodeid=False):
         y=np.zeros(self.nodes)
+        plt.figure()
         plt.plot(self.nodecoords,y,'k')
         if withnode:
             plt.plot(self.nodecoords,y,'r*')

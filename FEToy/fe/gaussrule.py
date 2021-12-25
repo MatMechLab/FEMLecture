@@ -108,6 +108,7 @@ class gausspoint1d:
             sys.exit('%d is out of 1d gauss points range !'%(i))
         return self.gpcoords[i,1]
     def plot(self):
+        plt.figure()
         plt.plot(self.gpcoords[:,1],self.gpcoords[:,0],'k*')
         plt.xlabel(r'$\xi$',fontsize=16)
         plt.ylabel(r'$w$',fontsize=16)
