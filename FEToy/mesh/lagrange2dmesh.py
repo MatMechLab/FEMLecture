@@ -101,12 +101,37 @@ class mesh2d:
             dx=(self.xmax-self.xmin)/(self.nx-1)
             dy=(self.ymax-self.ymin)/(self.ny-1)
             self.nodecoords=np.zeros((self.nodes,2))
+
+            # for bc nodes
+            leftnodes=np.zeros(self.ny+1,dtype=np.int16)
+            rightnodes=np.zeros(self.ny+1,dtype=np.int16)
+            bottomnodes=np.zeros(self.nx+1,dtype=np.int16)
+            topnodes=np.zeros(self.nx+1,dtype=np.int16)
             for j in range(self.ny+1):
                 for i in range(self.nx+1):
                     k=j*(self.nx+1)+i
                     self.nodecoords[k,0]=self.xmin+i*dx
                     self.nodecoords[k,1]=self.ymin+j*dx
+                    if i==0:
+                        # for left nodes
+                        leftnodes[j]=k
+                    if i==self.nx:
+                        # for right nodes
+                        rightnodes[j]=k
+                    if j==0:
+                        # for bottom nodes
+                        bottomnodes[i]=k
+                    if j==self.ny:
+                        # for top nodes
+                        topnodes[i]=k
+            self.bcnodeids={'left':leftnodes,'right':rightnodes,'bottom':bottomnodes,'top':topnodes}
+            ###########################################
             self.elementconn=np.zeros((self.elements,self.nodesperelement),dtype=np.int16)
+            # for bc elements
+            leftconn=np.zeros((self.ny,2),dtype=np.int16)
+            rightconn=np.zeros((self.ny,2),dtype=np.int16)
+            bottomconn=np.zeros((self.nx,2),dtype=np.int16)
+            topconn=np.zeros((self.nx,2),dtype=np.int16)
             for j in range(1,self.ny+1):
                 for i in range(1,self.nx+1):
                     e=(j-1)*self.nx+i-1
@@ -118,18 +143,63 @@ class mesh2d:
                     self.elementconn[e,1]=i2-1
                     self.elementconn[e,2]=i3-1
                     self.elementconn[e,3]=i4-1
+                    # 4 +-----+ 3
+                    #   |     |
+                    #   |     |
+                    # 1 +-----+ 2
+                    if i==1:
+                        # for left side
+                        leftconn[j-1,0]=i4
+                        leftconn[j-1,1]=i1
+                    if i==self.nx:  
+                        # for right side
+                        rightconn[j-1,0]=i2
+                        rightconn[j-1,1]=i3
+                    if j==1:  
+                        # for bottom side
+                        bottomconn[i-1,0]=i1
+                        bottomconn[i-1,1]=i2
+                    if j==self.ny:
+                        # for top side
+                        topconn[i-1,0]=i3
+                        topconn[i-1,1]=i4
+            self.bcconn={'left':leftconn,'right':rightconn,'bottom':bottomconn,'top':topconn}
         elif 'quad9' in self.meshtype:
             self.elements=self.nx*self.ny
             self.nodes=(2*self.nx+1)*(2*self.ny+1)
             dx=(self.xmax-self.xmin)/(2*self.nx)
             dy=(self.ymax-self.ymin)/(2*self.ny)
             self.nodecoords=np.zeros((self.nodes,2))
-            self.elementconn=np.zeros((self.elements,self.nodesperelement),dtype=np.int16)
+            # for bc nodes
+            leftnodes=np.zeros(2*self.ny+1,dtype=np.int16)
+            rightnodes=np.zeros(2*self.ny+1,dtype=np.int16)
+            bottomnodes=np.zeros(2*self.nx+1,dtype=np.int16)
+            topnodes=np.zeros(2*self.nx+1,dtype=np.int16)
             for j in range(2*self.ny+1):
                 for i in range(2*self.nx+1):
                     k=j*(2*self.nx+1)+i
                     self.nodecoords[k,0]=self.xmin+i*dx
                     self.nodecoords[k,1]=self.ymin+j*dy
+                    if i==0:
+                        # for left nodes
+                        leftnodes[j]=k
+                    if i==2*self.nx:
+                        # for right nodes
+                        rightnodes[j]=k
+                    if j==0:
+                        # for bottom nodes
+                        bottomnodes[i]=k
+                    if j==2*self.ny:
+                        # for top nodes
+                        topnodes[i]=k
+            self.bcnodeids={'left':leftnodes,'right':rightnodes,'bottom':bottomnodes,'top':topnodes}
+            #######################################        
+            self.elementconn=np.zeros((self.elements,self.nodesperelement),dtype=np.int16)
+            # for bc elements
+            leftconn=np.zeros((self.ny,3),dtype=np.int16)
+            rightconn=np.zeros((self.ny,3),dtype=np.int16)
+            bottomconn=np.zeros((self.nx,3),dtype=np.int16)
+            topconn=np.zeros((self.nx,3),dtype=np.int16)
             for j in range(1,self.ny+1):
                 for i in range(1,self.nx+1):
                     e=(j-1)*self.nx+i-1
@@ -151,6 +221,33 @@ class mesh2d:
                     self.elementconn[e,7-1]=i7-1
                     self.elementconn[e,8-1]=i8-1
                     self.elementconn[e,9-1]=i9-1
+                    ##
+                    # 4 +---7---+ 3
+                    #   |       |
+                    # 8 +   9   + 6
+                    #   |       |
+                    # 1 +---5---+ 2
+                    if i==1:
+                        # for left side
+                        leftconn[j-1,0]=i4
+                        leftconn[j-1,1]=i8
+                        leftconn[j-1,2]=i1
+                    if i==self.nx:
+                        # for right side
+                        rightconn[j-1,0]=i2
+                        rightconn[j-1,1]=i6
+                        rightconn[j-1,2]=i3
+                    if j==1:
+                        # for bottom side
+                        bottomconn[i-1,0]=i1
+                        bottomconn[i-1,1]=i5
+                        bottomconn[i-1,2]=i2
+                    if j==self.ny:
+                        # for top side
+                        topconn[i-1,0]=i3
+                        topconn[i-1,1]=i7
+                        topconn[i-1,2]=i4
+            self.bcconn={'left':leftconn,'right':rightconn,'bottom':bottomconn,'top':topconn}
     #####################################################
     def printnodes(self):
         print('*** node coordinates of the mesh (total nodes=%d, nodes per element=%d)'%(self.nodes,self.nodesperelement))

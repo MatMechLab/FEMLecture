@@ -85,6 +85,10 @@ class mesh1d:
         for e in range(self.elements):
             for j in range(self.nodesperelement):
                 self.elementconn[e,j]=e*self.order+j
+
+        # for the boundary elements, in 1d case, it is just simple point
+        self.bcelements={'left':1-1,'right':self.nodes-1}
+        self.bcnodeids={'left':1-1,'right':self.nodes-1}
     #####################################################
     def printnodes(self):
         print('*** node coordinates of the mesh (total nodes=%d, nodes per element=%d)'%(self.nodes,self.nodesperelement))
