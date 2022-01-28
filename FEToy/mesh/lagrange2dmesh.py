@@ -98,8 +98,8 @@ class mesh2d:
         if 'quad4' in self.meshtype:
             self.elements=self.nx*self.ny
             self.nodes=(self.nx+1)*(self.ny+1)
-            dx=(self.xmax-self.xmin)/(self.nx-1)
-            dy=(self.ymax-self.ymin)/(self.ny-1)
+            dx=(self.xmax-self.xmin)/(self.nx)
+            dy=(self.ymax-self.ymin)/(self.ny)
             self.nodecoords=np.zeros((self.nodes,2))
 
             # for bc nodes
