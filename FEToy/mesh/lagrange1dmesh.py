@@ -14,14 +14,17 @@ class mesh1d:
     def __init__(self,xmin=0.0,xmax=1.0,nx=5,meshtype='edge2'):
         """
         Initialize the mesh class 
-        :param xmin: the left point along x-axis
-        :type xmin: double
-        :param xmax: the right point along x-axis
-        :type xmax: double
-        :param nx: the number of element
-        :type nx: int
-        :param meshtype: the type of mesh you want to generated, it should be edge2, edge3, edge4
-        :type meshtype: string
+
+        Parameters
+        ----------
+        xmin : double
+            the left point along x-axis
+        xmax : double
+            the right point along x-axis
+        nx : int
+            the number of element
+        meshtype : string
+            the type of mesh you want to generated, it should be edge2, edge3, edge4
         """
         self.meshtype=meshtype
         self.dim=1
@@ -37,15 +40,21 @@ class mesh1d:
     def setnx(self,nx):
         """
         set up the number of element we want to generate
-        :param nx: the number of element
-        :type nx: int
+
+        Parameters
+        ----------
+        nx : int
+            the number of element
         """
         self.nx=nx
     def setmeshtype(self,meshtype):
         """
         set up the type of mesh we want to use
-        :param meshtype: the type name should be edge2,edge3,edge4
-        :type meshtype: string
+        
+        Parameters
+        ----------
+        meshtype : string
+            the type name should be edge2,edge3,edge4
         """
         if 'edge2' in meshtype:
             self.order=1
@@ -61,10 +70,13 @@ class mesh1d:
     def setdomainsize(self,xmin,xmax):
         """
         set up the domain size
-        :param xmin: the left point of x-axis
-        :type xmin: double
-        :param xmax: the right point of x-axis
-        :type xmax: double
+
+        Parameters
+        ----------
+        xmin : double
+            the left point of x-axis
+        xmax : double
+            the right point of x-axis
         """
         self.xmin=xmin
         self.xmax=xmax
@@ -91,11 +103,17 @@ class mesh1d:
         self.bcnodeids={'left':1-1,'right':self.nodes-1}
     #####################################################
     def printnodes(self):
+        """
+        print the node's coordinates
+        """
         print('*** node coordinates of the mesh (total nodes=%d, nodes per element=%d)'%(self.nodes,self.nodesperelement))
         for i in range(self.nodes):
             str='%6d-th node: x=%14.6e'%(i+1,self.nodecoords[i])
             print(str)
     def printelements(self):
+        """
+        print the element connectivity info
+        """
         print('*** element connectivity information(bulk elements=%d)'%(self.elements))
         for e in range(self.elements):
             str='%6d-th element'%(e+1)
@@ -104,6 +122,16 @@ class mesh1d:
             print(str)
     ######################################################
     def plotmesh(self,withnode=False,withnodeid=False):
+        """
+        plot the 1d mesh
+
+        Parameters
+        ----------
+        withnode : boolean
+            True to show the node
+        withnodeid : boolean
+            True to show the node id
+        """
         y=np.zeros(self.nodes)
         plt.figure()
         plt.plot(self.nodecoords,y,'k')

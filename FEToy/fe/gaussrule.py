@@ -15,8 +15,11 @@ class gausspoint1d:
     def __init__(self,ngp=1):
         """
         Initialize the gauss point class
-        :param ngp: the number of gauss points
-        :type ngp: int
+
+        Parameters
+        ----------
+        ngp : int
+            the number of gauss points
         """
         self.ngp=ngp
         self.gpcoords=np.zeros((ngp,2)) # 0-> weight, 1-> xi
@@ -24,8 +27,11 @@ class gausspoint1d:
     def setnum(self,num):
         """
         Set up the gauss point number
-        :param num: number of gauss point one want to generate
-        :type num: int
+
+        Parameters
+        ----------
+        num : int
+            the number of gauss point one want to generate
         """
         self.ngp=num
     def getgausspointsnumber(self):
@@ -49,7 +55,7 @@ class gausspoint1d:
             self.gpcoords[1,1]= np.sqrt(1.0/3.0)
         elif self.ngp==3:
             self.gpcoords[0,0]=5.0/9.0
-            self.gpcoords[0,1]=-np.sqrt(3.0/5.0);
+            self.gpcoords[0,1]=-np.sqrt(3.0/5.0)
 
             self.gpcoords[1,0]=8.0/9.0
             self.gpcoords[1,1]= 0.0
@@ -73,7 +79,7 @@ class gausspoint1d:
             t=np.sqrt(1120.0)
             self.gpcoords[1-1, 1] = -np.sqrt((70.0 + t) / 126.0)
             self.gpcoords[2-1, 1] = -np.sqrt((70.0 - t) / 126.0)
-            self.gpcoords[3-1, 1] = 0.0;
+            self.gpcoords[3-1, 1] = 0.0
             self.gpcoords[4-1, 1] = np.sqrt((70.0 - t) / 126.0)
             self.gpcoords[5-1, 1] = np.sqrt((70.0 + t) / 126.0)
      
@@ -96,6 +102,11 @@ class gausspoint1d:
     def getIthweight(self,i):
         """
         Get the i-th gauss point's weight
+
+        Parameters
+        ----------
+        i : int
+            the i-th gauss point
         """
         if i>self.ngp:
             sys.exit('%d is out of 1d gauss points range !'%(i))
@@ -125,9 +136,12 @@ class gausspoint2d:
         self.gpcoords=np.zeros((self.ngp2,3)) # 0->weight,1->xi,2->eta
     def setnum(self,ngp):
         """
-        Set up the gauss point number in single direction(here we use the tensor product)
-        :param ngp: number of gauss point in single direction
-        :type ngp: int
+        Get the i-th gauss point's weight
+
+        Parameters
+        ----------
+        ngp : int
+            the number of gauss point in each direction
         """
         self.ngp=ngp
         self.ngp2=ngp*ngp
@@ -163,17 +177,23 @@ class gausspoint2d:
     def getIthcoords(self,i):
         """
         get the i-th gauss point's coordinate
-        :param i: i the node index
-        :type i: int
+
+        Parameters
+        ----------
+        i : int
+            the node index
         """
         if i>self.ngp2:
             sys.exit('i=%d is out of 2d gauss point range'%(i))
         return self.gpcoords[i,1],self.gpcoords[i,2]
     def getIthweight(self,i):
         """
-        Get the i-th gauss point's weight
-        :param i: the node index
-        :type i: int
+        get the i-th gauss point's weight
+
+        Parameters
+        ----------
+        i : int
+            the node index
         """
         if i>self.ngp:
             sys.exit('i=%d is out of 2d gauss point range'%(i))

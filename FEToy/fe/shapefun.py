@@ -13,9 +13,12 @@ import sys
 
 class shape1d:
     def __init__(self,meshtype='edge2'):
-        '''
-        Initialize the 1d shape function class 
-        '''
+        """
+        Parameters
+        ----------
+        meshtype :  string
+            the type of mesh, the default one is 'edge2'
+        """
         self.nNodes=2
         self.shape_val=np.zeros(self.nNodes)
         self.shape_grad=np.zeros(self.nNodes)
@@ -24,11 +27,14 @@ class shape1d:
         self.setmeshtype(meshtype)
         self.update()
     def setmeshtype(self,meshtype):
-        '''
+        """
         set up the mesh type for shape1d class
-        :param meshtype: the type of mesh you plan to use
-        :type meshtype: string, it should be edge2,edge3,...
-        '''
+
+        Parameters
+        ----------
+        meshtype : string
+            the type of mesh you plan to use, it could be edge2, edge3, edge4
+        """
         if 'edge2' in meshtype:
             self.nNodes=2
             self.meshtype='edge2'
@@ -41,6 +47,9 @@ class shape1d:
         else:
             sys.exit('unsupported mesh type in shape1d->setmeshtype')
     def update(self):
+        """
+        update the shape function
+        """
         self.shape_val=np.zeros(self.nNodes)
         self.shape_grad=np.zeros(self.nNodes)
         self.jacdet=1.0
@@ -48,15 +57,18 @@ class shape1d:
         return self.nNodes
     ###########################################################
     def calc(self,xi,x,flag=True):
-        '''
+        """
         calculate the shape function value and its derivative w.r.t xi(local) or x(global)
-        :param xi: the local cooridinate
-        :type xi: double
-        :param x: the global coordinate
-        :type x: double
-        :param flag: True for the calculation based on global coordinate, otherwise, it use the local one
-        :type flag: boolean
-        '''
+        
+        Parameters
+        ----------
+        xi : scalar
+            the local cooridinate
+        x : vector
+            the global coordinate
+        flag : boolean 
+            True for the calculation based on global coordinate, otherwise, it use the local one
+        """
         if self.nNodes==2:
             self.shape_val[1-1] = 0.5*(1.0-xi)
             self.shape_grad[1-1]=-0.5
@@ -100,6 +112,9 @@ class shape1d:
 
         return self.shape_val,self.shape_grad,self.jacdet
     def plot(self):
+        """
+        plot the 1d shape function
+        """
         n=50
         xivec=np.linspace(-1.0,1.0,n)
         x=np.linspace(0.0,1.0,self.nNodes)
@@ -116,9 +131,9 @@ class shape1d:
 #################################################################################
 class shape2d:
     def __init__(self,meshtype='quad4'):
-        '''
+        """
         Initialize the 2d shape function class 
-        '''
+        """
         self.nNodes=4
         self.shape_val=np.zeros(self.nNodes)
         self.shape_grad=np.zeros((self.nNodes,2))
@@ -127,11 +142,14 @@ class shape2d:
         self.setmeshtype(meshtype)
         self.update()
     def setmeshtype(self,meshtype):
-        '''
+        """
         set up the mesh type for shape2d class
-        :param meshtype: the type of mesh you plan to use
-        :type meshtype: string, it should be quad4,quad9
-        '''
+
+        Parameters
+        ----------
+        meshtype: string
+            the type of mesh, it should be quad4,quad9
+        """
         if 'quad4' in meshtype:
             self.nNodes=4
             self.meshtype='quad4'
@@ -141,26 +159,35 @@ class shape2d:
         else:
             sys.exit('unsupported mesh type in shape2d->setmeshtype')
     def update(self):
+        """
+        update the shape function vector
+        """
         self.shape_val=np.zeros(self.nNodes)
         self.shape_grad=np.zeros((self.nNodes,2))
         self.jacdet=1.0
     def getshpnumber(self):
+        """
+        return the number of shape function
+        """
         return self.nNodes
     ###########################################################
     def calc(self,xi,eta,x,y,flag=True):
-        '''
+        """
         calculate the shape function value and its derivative w.r.t xi(local) or x(global)
-        :param xi: the local cooridinate
-        :type xi: double
-        :param eta: the local cooridinate
-        :type eta: double
-        :param x: the global coordinate
-        :type x: double
-        :param y: the global coordinate
-        :type y: double
-        :param flag: True for the calculation based on global coordinate, otherwise, it use the local one
-        :type flag: boolean
-        '''
+
+        Parameters
+        ----------
+        xi : double
+            the local cooridinate
+        eta : double
+            the local cooridinate
+        x : double 
+            the global coordinate
+        y : double
+            the global coordinate
+        flag : boolean
+            True for the calculation based on global coordinate, otherwise, it use the local one
+        """
         if self.nNodes==4:
             self.shape_val[0]=(1.0-xi)*(1.0-eta)/4.0
             self.shape_val[1]=(1.0+xi)*(1.0-eta)/4.0
@@ -234,10 +261,16 @@ class shape2d:
             sys.exit('error: you have one singular 1d mesh !!!')
         if flag==True:
             for i in range(self.nNodes):
-                self.shape_grad[i]=self.shape_grad[i]/self.jacdet
+                temp1=self.shape_grad[i,1-1]*xjac[0,0]+self.shape_grad[i,2-1]*xjac[0,1]
+                temp2=self.shape_grad[i,1-1]*xjac[1,0]+self.shape_grad[i,2-1]*xjac[1,1]
+                self.shape_grad[i,1-1]=temp1
+                self.shape_grad[i,2-1]=temp2
 
         return self.shape_val,self.shape_grad,self.jacdet
     def plot(self):
+        """
+        plot the 2d shape function
+        """
         n=20
         xivec=np.linspace(-1.0,1.0,n)
         etavec=np.linspace(-1.0,1.0,n)

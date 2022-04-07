@@ -13,21 +13,24 @@ import sys
 class mesh2d:
     def __init__(self,xmin=0.0,xmax=1.0,ymin=0.0,ymax=1.0,nx=5,ny=5,meshtype='quad4'):
         """
-        Initialize the mesh class 
-        :param xmin: the left point along x-axis
-        :type xmin: double
-        :param xmax: the right point along x-axis
-        :type xmax: double
-        :param ymin: the bottom point along y-axis
-        :type ymin: double
-        :param ymax: the top point along y-axis
-        :type ymax: double
-        :param nx: the number of element in x direction
-        :type nx: int
-        :param ny: the number of element in y direction
-        :type ny: int
-        :param meshtype: the type of mesh you want to generated, it should be quad4, edge8, edge9
-        :type meshtype: string
+        Initialize the mesh class
+
+        Parameters
+        ----------
+        xmin : double
+            the left point along x-axis
+        xmax : double
+            the right point along x-axis
+        ymin : double
+            the bottom point along y-axis
+        ymax : double
+            the top point along y-axis
+        nx : int
+            the number of element in x direction
+        ny : int
+            the number of element in y direction
+        meshtype : string
+            the type of mesh you want to generated, it should be quad4, edge8, edge9
         """
         self.meshtype=meshtype
         self.dim=2
@@ -46,22 +49,31 @@ class mesh2d:
     def setnx(self,nx):
         """
         set up the number of element we want to generate along x direction
-        :param nx: the number of element
-        :type nx: int
+
+        Parameters
+        ----------
+        nx : int
+            nx: the number of element
         """
         self.nx=nx
     def setny(self,ny):
         """
         set up the number of element we want to generate along y direction
-        :param ny: the number of element
-        :type ny: int
+
+        Parameters
+        ----------
+        ny : int
+            the number of element
         """
         self.ny=ny
     def setmeshtype(self,meshtype):
         """
         set up the type of mesh we want to use
-        :param meshtype: the type name should be qud4,quad8,quad9
-        :type meshtype: string
+
+        Parameters
+        ----------
+        meshtype : string
+            the type name should be qud4,quad8,quad9
         """
         if 'quad4' in meshtype:
             self.order=1
@@ -76,14 +88,17 @@ class mesh2d:
     def setdomainsize(self,xmin,xmax,ymin,ymax):
         """
         set up the domain size
-        :param xmin: the left point of x-axis
-        :type xmin: double
-        :param xmax: the right point of x-axis
-        :type xmax: double
-        :param ymin: the bottom point of y-axis
-        :type ymin: double
-        :param ymax: the top point of y-axis
-        :type ymax: double
+
+        Parameters
+        ----------
+        xmin : double
+            the left point of x-axis
+        xmax : double
+            the right point of x-axis
+        ymin : double
+            the bottom point of y-axis
+        ymax: double
+            the top point of y-axis
         """
         self.xmin=xmin
         self.xmax=xmax
@@ -210,7 +225,7 @@ class mesh2d:
                     i5=i1+1
                     i6=i2+(2*self.nx+1)
                     i7=i3-1
-                    i8=i1+(2*self.nx+1);
+                    i8=i1+(2*self.nx+1)
                     i9=i8+1
                     self.elementconn[e,1-1]=i1-1
                     self.elementconn[e,2-1]=i2-1
@@ -250,11 +265,17 @@ class mesh2d:
             self.bcconn={'left':leftconn,'right':rightconn,'bottom':bottomconn,'top':topconn}
     #####################################################
     def printnodes(self):
+        """
+        print the node's coordinates
+        """
         print('*** node coordinates of the mesh (total nodes=%d, nodes per element=%d)'%(self.nodes,self.nodesperelement))
         for i in range(self.nodes):
             str='%6d-th node: x=%14.6e,y=%14.6e'%(i+1,self.nodecoords[i,0],self.nodecoords[i,1])
             print(str)
     def printelements(self):
+        """
+        print the element connectivity info
+        """
         print('*** element connectivity information(bulk elements=%d)'%(self.elements))
         for e in range(self.elements):
             str='%6d-th element :'%(e+1)
@@ -263,6 +284,16 @@ class mesh2d:
             print(str)
     ######################################################
     def plotmesh(self,withnode=False,withnodeid=False):
+        """
+        plot the 2d mesh
+
+        Parameters
+        ----------
+        withnode : boolean
+            True to show the node
+        withnodeid : boolean
+            True to show the node id
+        """
         plt.plot()
         for e in range(self.elements):
             conn=self.elementconn[e,:]
