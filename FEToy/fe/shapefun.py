@@ -89,7 +89,7 @@ class shape1d:
             self.shape_grad[1-1]=-27.0*xi*xi/16.0+9.0*xi/8.0+ 1.0/16.0
 
             self.shape_val[2-1]=(3.0*xi+3.0)*(3.0*xi-1.0)*(3.0*xi-3.0)/16.0
-            self.shape_grad[2-1]=-27.0*xi*xi/16.0+9.0*xi/8.0+ 1.0/16.0
+            self.shape_grad[2-1]= 81.0*xi*xi/16.0-9.0*xi/8.0-27.0/16.0
 
             self.shape_val[3-1]=-(3.0*xi+3.0)*(3.0*xi+1.0)*(3.0*xi-3.0)/16.0
             self.shape_grad[3-1]=-81.0*xi*xi/16.0-9.0*xi/8.0+27.0/16.0

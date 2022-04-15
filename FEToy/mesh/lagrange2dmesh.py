@@ -164,20 +164,20 @@ class mesh2d:
                     # 1 +-----+ 2
                     if i==1:
                         # for left side
-                        leftconn[j-1,0]=i4
-                        leftconn[j-1,1]=i1
+                        leftconn[j-1,0]=i4-1
+                        leftconn[j-1,1]=i1-1
                     if i==self.nx:  
                         # for right side
-                        rightconn[j-1,0]=i2
-                        rightconn[j-1,1]=i3
+                        rightconn[j-1,0]=i2-1
+                        rightconn[j-1,1]=i3-1
                     if j==1:  
                         # for bottom side
-                        bottomconn[i-1,0]=i1
-                        bottomconn[i-1,1]=i2
+                        bottomconn[i-1,0]=i1-1
+                        bottomconn[i-1,1]=i2-1
                     if j==self.ny:
                         # for top side
-                        topconn[i-1,0]=i3
-                        topconn[i-1,1]=i4
+                        topconn[i-1,0]=i3-1
+                        topconn[i-1,1]=i4-1
             self.bcconn={'left':leftconn,'right':rightconn,'bottom':bottomconn,'top':topconn}
         elif 'quad9' in self.meshtype:
             self.elements=self.nx*self.ny
@@ -244,24 +244,24 @@ class mesh2d:
                     # 1 +---5---+ 2
                     if i==1:
                         # for left side
-                        leftconn[j-1,0]=i4
-                        leftconn[j-1,1]=i8
-                        leftconn[j-1,2]=i1
+                        leftconn[j-1,0]=i4-1
+                        leftconn[j-1,1]=i8-1
+                        leftconn[j-1,2]=i1-1
                     if i==self.nx:
                         # for right side
-                        rightconn[j-1,0]=i2
-                        rightconn[j-1,1]=i6
-                        rightconn[j-1,2]=i3
+                        rightconn[j-1,0]=i2-1
+                        rightconn[j-1,1]=i6-1
+                        rightconn[j-1,2]=i3-1
                     if j==1:
                         # for bottom side
-                        bottomconn[i-1,0]=i1
-                        bottomconn[i-1,1]=i5
-                        bottomconn[i-1,2]=i2
+                        bottomconn[i-1,0]=i1-1
+                        bottomconn[i-1,1]=i5-1
+                        bottomconn[i-1,2]=i2-1
                     if j==self.ny:
                         # for top side
-                        topconn[i-1,0]=i3
-                        topconn[i-1,1]=i7
-                        topconn[i-1,2]=i4
+                        topconn[i-1,0]=i3-1
+                        topconn[i-1,1]=i7-1
+                        topconn[i-1,2]=i4-1
             self.bcconn={'left':leftconn,'right':rightconn,'bottom':bottomconn,'top':topconn}
     #####################################################
     def printnodes(self):
