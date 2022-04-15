@@ -19,4 +19,4 @@ THE SOFTWARE.
 """
 
 
-__all__=["PlotResult"]
+__all__=["PlotResult","Result"]
