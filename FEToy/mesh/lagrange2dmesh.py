@@ -45,6 +45,7 @@ class mesh2d:
         self.nodesperelement=4
         self.elements=0
         self.meshtype=meshtype
+        self.vtkcelltype=9
         self.setmeshtype(meshtype)
     def setnx(self,nx):
         """
@@ -79,10 +80,12 @@ class mesh2d:
             self.order=1
             self.nodesperelement=4
             self.meshtype='quad4'
+            self.vtkcelltype=9
         elif 'quad9' in meshtype:
             self.order=2
             self.nodesperelement=9
             self.meshtype='quad9'
+            self.vtkcelltype=28
         else:
             sys.exit('sorry, unsuported 2d mesh type in FEToy!')
     def setdomainsize(self,xmin,xmax,ymin,ymax):

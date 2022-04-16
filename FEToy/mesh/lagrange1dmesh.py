@@ -36,6 +36,7 @@ class mesh1d:
         self.nodesperelement=2
         self.elements=0
         self.meshtype=meshtype
+        self.vtkcelltype=3
         self.setmeshtype(meshtype)
     def setnx(self,nx):
         """
@@ -59,12 +60,15 @@ class mesh1d:
         if 'edge2' in meshtype:
             self.order=1
             self.nodesperelement=2
+            self.vtkcelltype=3
         elif 'edge3' in meshtype:
             self.order=2
             self.nodesperelement=3
+            self.vtkcelltype=4
         elif 'edge4' in meshtype:
             self.order=3
             self.nodesperelement=4
+            self.vtkcelltype=4
         else:
             sys.exit('sorry, unsuported 1d mesh type in FEToy!')
     def setdomainsize(self,xmin,xmax):
